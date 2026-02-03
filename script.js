@@ -1,32 +1,34 @@
-const images = document.querySelectorAll(".gallery img");
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightbox-img");
-let currentIndex = 0;
+const display = document.getElementById("display");
 
-function openLightbox(index) {
-  currentIndex = index;
-  lightbox.style.display = "flex";
-  lightboxImg.src = images[index].src;
+function appendValue(value) {
+  display.value += value;
 }
 
-function closeLightbox() {
-  lightbox.style.display = "none";
+function clearDisplay() {
+  display.value = "";
 }
 
-function changeImage(step) {
-  currentIndex += step;
-  if (currentIndex < 0) currentIndex = images.length - 1;
-  if (currentIndex >= images.length) currentIndex = 0;
-  lightboxImg.src = images[currentIndex].src;
+function deleteLast() {
+  display.value = display.value.slice(0, -1);
 }
 
-/* Filter images */
-function filterImages(category) {
-  images.forEach(img => {
-    if (category === "all" || img.classList.contains(category)) {
-      img.style.display = "block";
-    } else {
-      img.style.display = "none";
-    }
-  });
+function calculate() {
+  try {
+    display.value = eval(display.value);
+  } catch {
+    display.value = "Error";
+  }
 }
+
+/* BONUS: Keyboard support */
+document.addEventListener("keydown", function (event) {
+  if ((event.key >= '0' && event.key <= '9') || "+-*/.".includes(event.key)) {
+    appendValue(event.key);
+  } else if (event.key === "Enter") {
+    calculate();
+  } else if (event.key === "Backspace") {
+    deleteLast();
+  } else if (event.key === "Escape") {
+    clearDisplay();
+  }
+});
