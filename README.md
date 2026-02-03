@@ -1,1 +1,1 @@
-Frontend Development Task1 about Image gallery
+Frontend Development Task2 about Build a calculator
